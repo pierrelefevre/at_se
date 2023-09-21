@@ -21,6 +21,7 @@ def get_stories():
     return stories
 
 def save_stories(stories):
+    stories.sort(key=lambda story: story['published_at'], reverse=True)
     open('db/stories.json', 'w').write(json.dumps(stories))
 
 
