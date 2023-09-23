@@ -1,0 +1,121 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import groups from "../db/groups.json";
+import stories from "../db/stories.json";
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <a href="/" style="text-decoration: none"
+      ><h1><span class="text-gradient">åt</span></h1></a
+    >
+    <a
+      href={"/stories/" + stories[0]?.id}
+      style="text-decoration: none; color: inherit"
+    >
+      <div class="instructions">
+        <strong>Senaste nytt</strong>
+        <h3>
+          {stories[0]?.summary?.title}
+        </h3>
+        <small>{stories[0]?.published_at.replace("T", " ").split(".")[0]}</small
+        >
+
+        <p>{stories[0]?.summary?.body}</p>
+      </div>
+    </a>
+
+    {
+      Object.keys(groups).map((group) => (
+        <div>
+          <h3>{group}</h3>
+          {groups[group].map((storyId, index) => (
+            <div>
+              <a href={"/stories/" + storyId}  style="text-decoration: none; color: inherit; font-weight: bolder">
+                <p>
+                  {
+                    stories.find((story) => story.id === storyId)?.summary
+                      ?.title
+                  }
+                </p>
+              </a>
+
+              {index === 0 && (
+                <p>
+                  {stories
+                    .find((story) => story.id === storyId)
+                    ?.summary?.body.split(" ")
+                    .slice(0, 20)
+                    .join(" ") + "..."}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 800px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  .astro-a {
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translatex(-50%);
+    width: 220px;
+    height: auto;
+    z-index: -1;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  .instructions {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--accent-light), 25%);
+    background: linear-gradient(
+      rgba(var(--accent-dark), 66%),
+      rgba(var(--accent-dark), 33%)
+    );
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .instructions code {
+    font-size: 0.8em;
+    font-weight: bold;
+    background: rgba(var(--accent-light), 12%);
+    color: rgb(var(--accent-light));
+    border-radius: 4px;
+    padding: 0.3em 0.4em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent-light));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 2rem;
+    padding: 0;
+  }
+</style>
