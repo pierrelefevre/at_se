@@ -7,6 +7,8 @@ def refresh():
     # Get current stories
     stories = helpers.get_stories()
 
+    stories = verify(stories)
+
     # scrape new stories
     new_stories = expressen_se.scrape()
     helpers.log(f'Scraped {len(new_stories)} stories')
@@ -27,6 +29,26 @@ def refresh():
     helpers.log(f'Added {new} new stories, {len(stories)} total stories')
 
 
+def verify(stories):
+    for story in stories:
+        if 'summary' not in story:
+            story['summary'] = llm.summarize(story)
+            helpers.log(f'Fixed missing summary {story["title"]}')
+            helpers.save_stories(stories)
+
+        if 'category' not in story:
+            story['category'] = llm.pick_headline_topic(story['title'])
+            helpers.log(f'Fixed missing category {story["title"]}')
+            helpers.save_stories(stories)
+
+        if 'id' not in story:
+            story['id'] = helpers.get_next_id()
+            helpers.log(f'Fixed missing ID {story["title"]}')
+            helpers.save_stories(stories)
+
+    return stories
+
+
 def group_headlines():
     stories = helpers.get_stories()
 
@@ -35,7 +57,7 @@ def group_headlines():
         headlines.append({'id': story['id'], 'title': story['title']})
     grouped = llm.group_headlines(headlines)
 
-    helpers.log(f'Grouped {len(stories)} into {len(grouped)} groups')
+    helpers.log(f'Grouped {len(stories)} into {len(grouped.keys())} groups')
 
     helpers.save_groups(grouped)
 

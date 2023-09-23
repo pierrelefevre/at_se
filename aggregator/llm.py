@@ -74,9 +74,9 @@ def group_headlines(headline):
 
 
 def _group_headlines(headlines):
-    body = "Gruppera dessa titlar till nyhetsartiklar i grupper av 3-10 artiklar. Svara i JSON format med kategorin som nyckel och en array av ID till artiklarna som ingår i den kategorin. Namnen till kategorierna ska vara max några ord men spännande och reflektera kopplingen mellan dessa nyhetsartiklar. Varje artikel får vara med i mest en kategori."
+    body = "Gruppera de mest intressanta titlar i 3 grupper. Svara i JSON format med nyhetens namn som nyckel och en array av ID till artiklarna som ingår i den kategorin. Exempel: {\"Här riskeras människoliv\": [...],  \"Brott och olyckor\": [...]}. JSON strängen måste vara komplett. Namnen till kategorierna ska vara max några ord men spännande och reflektera kopplingen mellan artiklarna. Varje artikel får vara med i mest en grupp, och grupperna får innehålla max 5 artiklar."
 
-    data = json.dumps(headlines)
+    data = json.dumps(headlines).replace("}", "").replace("{", "")
 
     while num_tokens_from_messages([
         {"role": "system", "content": body},
@@ -92,6 +92,7 @@ def _group_headlines(headlines):
         ]
     )
     message = response["choices"][0]["message"]["content"]
+
     groups = json.loads(message)
     return groups
 

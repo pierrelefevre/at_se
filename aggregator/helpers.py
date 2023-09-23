@@ -33,4 +33,5 @@ def save_groups(groups):
     open('db/groups.json', 'w').write(json.dumps(groups))
 
 def log(message):
-    print(f'{get_timestamp()} {message}')
+    processed = message.replace("\n", " ")
+    print(f'{get_timestamp()} {processed}')
