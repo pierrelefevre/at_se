@@ -5,35 +5,26 @@ import stories from "../../db/stories.json";
 
 const { storyId } = Astro.params;
 
-console.log(storyId)
+console.log(storyId);
 
 const story = stories.find((story) => story.id === parseInt(storyId));
-
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title={"åt.se | " + story?.summary?.title}>
   <main>
-    <a href="/" style="text-decoration: none"><h1><span class="text-gradient">åt</span></h1></a>
     <div>
       <h3>{story?.summary?.title}</h3>
       <small>{story?.published_at.replace("T", " ").split(".")[0]}</small>
       <p>{story?.summary?.body}</p>
 
-      <p>
-        ---
-      </p>
+      <p>---</p>
       <h3>Original story</h3>
       <h4>
         {story?.title}
-        <p>{story?.preamble}</p>
-        <p>{story?.body}</p>
-        <a
-          href={story?.url}
-          style="color: white"
-        >
-          Original story
-        </a>
       </h4>
+      <p>{story?.preamble}</p>
+      <p>{story?.body}</p>
+      <a href={story?.url} style="color: white"> Original story</a>
     </div>
   </main>
 </Layout>
