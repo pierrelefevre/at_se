@@ -29,7 +29,7 @@ import stories from "../db/stories.json";
     {
       Object.keys(groups).map((group) => (
         <div>
-          <h3>{group}</h3>
+          <h3 style="text-decoration: underline">{group}</h3>
           {groups[group].map((storyId, index) => (
             <div>
               <a href={"/stories/" + storyId}  style="text-decoration: none; color: inherit; font-weight: bolder">
