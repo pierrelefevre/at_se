@@ -1,0 +1,22 @@
+name: docker-build-frontend
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: registry.cloud.cbh.kth.se
+          username: ${{ secrets.DOCKER_USERNAME_FRONTEND }}
+          password: ${{ secrets.DOCKER_PASSWORD_FRONTEND }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_TAG_FRONTEND }}
