@@ -20,3 +20,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_TAG_FRONTEND }}
+          context: frontend
