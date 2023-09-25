@@ -18,7 +18,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          push: true
-          tags: ${{ secrets.DOCKER_TAG_AGGREGATOR }}
           context: ./aggregator
           file: ./aggregator/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_TAG_AGGREGATOR }}
