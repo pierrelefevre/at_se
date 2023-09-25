@@ -20,4 +20,6 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_TAG_FRONTEND }}
-          context: frontend
+          context: ./frontend
+          file: ./frontend/Dockerfile
+  

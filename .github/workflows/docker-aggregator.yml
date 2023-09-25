@@ -20,4 +20,5 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_TAG_AGGREGATOR }}
-          context: aggregator
+          context: ./aggregator
+          file: ./aggregator/Dockerfile
