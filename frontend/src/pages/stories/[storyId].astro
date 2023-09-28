@@ -1,7 +1,8 @@
 ---
+import { getStories } from "../../db/db";
 import Layout from "../../layouts/Layout.astro";
 
-import stories from "../../db/stories.json";
+let stories = getStories();
 
 const { storyId } = Astro.params;
 
