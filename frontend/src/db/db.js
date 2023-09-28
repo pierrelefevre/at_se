@@ -1,10 +1,7 @@
-import mongodb from "mongodb";
+import { MongoClient } from 'mongodb';
 
 export const getClient = () => {
-  const client = mongodb.MongoClient(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(import.meta.env.MONGO_URI);
   return client;
 };
 
