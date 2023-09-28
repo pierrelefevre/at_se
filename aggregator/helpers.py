@@ -22,7 +22,9 @@ def get_max_id():
     if testing:
         max_id = int(open('db/max_id.txt').read())
     else:
-        max_id = get_db()['metadata'].find_one({'name': 'max_id'})['value']
+        max_id = int(get_db()['metadata'].find_one({'name': 'max_id'})['value'])
+        if max_id == None:
+            max_id = 0
     return max_id
         
 def get_next_id():
