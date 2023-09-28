@@ -1,7 +1,7 @@
 import expressen_se
 import llm
 import helpers
-
+import time 
 
 def refresh():
     # Get current stories
@@ -63,8 +63,12 @@ def group_headlines():
 
 
 def main():
-    refresh()
-    group_headlines()
+    while True:
+        helpers.log('Refreshing...')
+        refresh()
+        group_headlines()
+        helpers.log('Sleeping for 10 minutes...')
+        time.sleep(600)
 
 
 if __name__ == '__main__':
