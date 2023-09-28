@@ -5,6 +5,7 @@ import time
 
 
 def refresh():
+    helpers.log('Refreshing stories')
     # Get current stories
     stories = helpers.get_stories()
 
@@ -31,6 +32,7 @@ def refresh():
 
 
 def verify(stories):
+    helpers.log('Verifying stories')
     for story in stories:
         if 'summary' not in story:
             story['summary'] = llm.summarize(story)
@@ -51,6 +53,7 @@ def verify(stories):
 
 
 def group_headlines():
+    helpers.log('Grouping headlines')
     stories = helpers.get_stories()
 
     headlines = []
