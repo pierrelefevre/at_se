@@ -2,3 +2,4 @@ openai
 tiktoken
 pymongo
 bs4
+python-dotenv

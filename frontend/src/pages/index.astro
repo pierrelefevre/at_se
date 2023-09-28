@@ -1,8 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-import groups from "../db/groups.json";
-import stories from "../db/stories.json";
+import {getStories, getGroups} from "../db/db";
+
+let groups = getStories();
+let stories = getGroups();
+
 ---
 
 <Layout title="åt.se">
