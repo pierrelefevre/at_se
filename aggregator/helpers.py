@@ -1,6 +1,7 @@
 import datetime
 import json
 import os 
+import sys
 from dotenv import load_dotenv
 
 import pymongo
@@ -67,4 +68,4 @@ def save_groups(groups):
 
 def log(message):
     processed = message.replace("\n", " ")
-    print(f'{get_timestamp()} {processed}')
+    print(f'{get_timestamp()} {processed}', file=sys.stderr)
