@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 export const getClient = () => {
+  console.log(import.meta.env)
   console.log(" MongoClient " + import.meta.env.MONGO_URI)
   const client = new MongoClient(import.meta.env.MONGO_URI);
   return client;
