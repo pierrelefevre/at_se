@@ -1,7 +1,8 @@
 import expressen_se
 import llm
 import helpers
-import time 
+import time
+
 
 def refresh():
     # Get current stories
