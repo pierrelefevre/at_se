@@ -12,15 +12,34 @@ const filtered = stories.filter(
     encodeURIComponent(topic.toLowerCase())
 );
 
-console.log(filtered);
+console.log(filtered.length);
 ---
 
 <Layout title={"åt.se | " + topic}>
+  <h5>{filtered.length > 0 && filtered[0].category}</h5>
+  <h5>{filtered.length == 0 && "404 No stories with this topic"}</h5>
   <div>
     {
-      filtered.map((story, index) => {
-        <div>{index}</div>;
-      })
+      filtered.map((story, index) => (
+        <div>
+          <a
+            href={"/stories/" + story.id}
+            style="text-decoration: none; color: inherit; font-weight: bolder"
+          >
+            <p style={!story.summary && "color:red"}>
+              {story.summary ? story.summary.title : story.title}
+            </p>
+          </a>
+
+          {index === 0 && (
+            <p>
+              {story.summary?.body.split(" ")
+                .slice(0, 20)
+                .join(" ") + "..."}
+            </p>
+          )}
+        </div>
+      ))
     }
   </div>
 </Layout>

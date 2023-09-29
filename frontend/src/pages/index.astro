@@ -17,6 +17,12 @@ let topics = [
   "Nöje & kultur",
   "Tech",
 ];
+
+let topicLen = []
+
+topics.forEach((topic) => {
+  topicLen.push(stories.filter((story) => story.category.includes(topic)).length)
+})
 ---
 
 <Layout title="åt.se">
@@ -39,13 +45,13 @@ let topics = [
 
     <div class="topics" style="display:flex; flex-wrap:wrap">
       {
-        topics.map((topic) => (
+        topics.map((topic, index) => topicLen[index]>0 && (
           <a
             href={"/topics/" + encodeURIComponent(topic.toLowerCase())}
             style="text-decoration: none; color: inherit; margin-left: .5rem; margin-right: .5rem"
           >
             <div class="topic">
-              <h3>{topic}</h3>
+              <h3>{topic + " (" + topicLen[index] +")"}</h3>
             </div>
           </a>
         ))
@@ -53,10 +59,10 @@ let topics = [
     </div>
 
     {
-      Object.keys(groups).map((group) => (
+      groups.map((group) => (
         <div style="margin: 1rem; padding: 1rem; background: #282c34">
-          <h2>{group}</h2>
-          {groups[group].map((storyId, index) => (
+          <h2>{group.name}</h2>
+          {group.value.map((storyId, index) => (
             <div>
               <a
                 href={"/stories/" + storyId}
