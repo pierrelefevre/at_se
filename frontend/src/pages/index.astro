@@ -1,4 +1,6 @@
 ---
+const startTimer = Date.now();
+
 import Layout from "../layouts/Layout.astro";
 
 import { getStories, getGroups } from "../db/db";
@@ -31,12 +33,14 @@ let stories = await getStories();
                   <small class="font-light text-white text-sm">
                     {story?.category}
                   </small>
-                  {story?.importance &&
-                    <small class="font-light text-gray-500 text-sm">-</small>
-                    <small class="font-light text-white text-sm">
-                      {story?.importance}
-                    </small>
-                  }
+                  {story?.importance && (
+                    <>
+                      <small class="font-light text-gray-500 text-sm">-</small>
+                      <small class="font-light text-white text-sm">
+                        {story?.importance}
+                      </small>
+                    </>
+                  )}
                 </div>
 
                 <span class="text-base font-normal">
@@ -53,4 +57,10 @@ let stories = await getStories();
       </div>
     ))
   }
+
+  <p class="text-sm text-gray-500 font-light">
+    Loaded {groups.length} groups and {stories.length} stories in {
+      Date.now() - startTimer
+    } ms
+  </p>
 </Layout>
