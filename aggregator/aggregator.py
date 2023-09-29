@@ -30,6 +30,9 @@ def refresh():
 
     helpers.log(f'Added {new} new stories, {len(stories)} total stories')
 
+    # return number of new stories
+    return new
+
 
 def verify(stories):
     helpers.log('Verifying stories')
@@ -69,8 +72,9 @@ def group_headlines():
 def main():
     while True:
         helpers.log('Refreshing...')
-        refresh()
-        group_headlines()
+        new = refresh()
+        if new > 0:
+            group_headlines()
         helpers.log('Sleeping for 10 minutes...')
         time.sleep(600)
 
