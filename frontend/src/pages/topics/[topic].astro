@@ -4,30 +4,25 @@ import Layout from "../../layouts/Layout.astro";
 
 let stories = await getStories();
 
-const { storyId } = Astro.params;
+const { topic } = Astro.params;
 
-console.log(storyId);
+const filtered = stories.filter(
+  (story) =>
+    encodeURIComponent(story.category.toLowerCase()) ===
+    encodeURIComponent(topic.toLowerCase())
+);
 
-const story = stories.find((story) => story.id === parseInt(storyId));
+console.log(filtered);
 ---
 
-<Layout title={"åt.se | " + story?.summary?.title}>
-  <main>
-    <div>
-      <h3>{story?.summary?.title}</h3>
-      <small>{story?.published_at.replace("T", " ").split(".")[0]}</small>
-      <p>{story?.summary?.body}</p>
-
-      <p>---</p>
-      <h3>Original story</h3>
-      <h4>
-        {story?.title}
-      </h4>
-      <p>{story?.preamble}</p>
-      <p>{story?.body}</p>
-      <a href={story?.url} style="color: white"> Original story</a>
-    </div>
-  </main>
+<Layout title={"åt.se | " + topic}>
+  <div>
+    {
+      filtered.map((story, index) => {
+        <div>{index}</div>;
+      })
+    }
+  </div>
 </Layout>
 
 <style>

@@ -1,11 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-import {getStories, getGroups} from "../db/db";
+import { getStories, getGroups } from "../db/db";
 
-let groups = getGroups();
-let stories = getStories();
+let groups = await getGroups();
+let stories = await getStories();
 
+let topics = [
+  "Nyheter",
+  "Inrikes",
+  "Utrikes",
+  "Ekonomi",
+  "Politik",
+  "Opinion",
+  "Sport",
+  "Nöje & kultur",
+  "Tech",
+];
 ---
 
 <Layout title="åt.se">
@@ -25,6 +36,21 @@ let stories = getStories();
         <p>{stories[0]?.summary?.body}</p>
       </div>
     </a>
+
+    <div class="topics" style="display:flex; flex-wrap:wrap">
+      {
+        topics.map((topic) => (
+          <a
+            href={"/topics/" + encodeURIComponent(topic.toLowerCase())}
+            style="text-decoration: none; color: inherit; margin-left: .5rem; margin-right: .5rem"
+          >
+            <div class="topic">
+              <h3>{topic}</h3>
+            </div>
+          </a>
+        ))
+      }
+    </div>
 
     {
       Object.keys(groups).map((group) => (
@@ -60,4 +86,3 @@ let stories = getStories();
     }
   </main>
 </Layout>
-

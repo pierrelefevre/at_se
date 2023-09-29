@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
 export const getClient = () => {
   const uri = import.meta.env.MONGO_URI;
@@ -19,12 +19,12 @@ export const getCollection = (collection) => {
   return db.collection(collection);
 };
 
-export const getStories = () => {
-  const stories = getCollection("stories").find({}).toArray();
+export const getStories = async () => {
+  const stories = await getCollection("stories").find({}).toArray();
   return stories;
 };
 
-export const getGroups = () => {
-  const groups = getCollection("groups").find({}).toArray();
+export const getGroups = async () => {
+  const groups = await getCollection("groups").find({}).toArray();
   return groups;
 };
