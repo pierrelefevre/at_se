@@ -20,7 +20,7 @@ export const getCollection = (collection) => {
 };
 
 export const getStories = async () => {
-  const stories = await getCollection("stories").find({}).toArray();
+  const stories = await getCollection("stories").find({}).sort({ published_at: -1 }).toArray();
   return stories;
 };
 
