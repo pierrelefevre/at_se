@@ -23,7 +23,7 @@ const { title, stories } = Astro.props;
   <body>
     <Navbar stories={stories} />
 	<Banner stories={stories} />
-    <main class="max-w-2xl m-auto p-5">
+    <main class="max-w-2xl m-auto p-5 min-h-[80vh]">
       <slot />
     </main>
 	<Footer />
