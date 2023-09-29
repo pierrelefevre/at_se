@@ -10,19 +10,22 @@ let stories = await getStories();
 
 <Layout title="åt.se" stories={stories}>
     { groups.map((group, index) => (
-        <div class="my-5 p-3">
-          <p class="text-3xl text-white font-bold">{group.name}</p>
+        <div class="mb-5">
+          <p class="text-5xl font-bold text-white mb-5">{group.name}</p>
           {group.value.map((storyId, index) => (
               <a
                 href={"/stories/" + storyId} 
-                ><div
-                class="text-xl text-white font-semibold my-3">
+                >
+        <div class="text-xl text-white font-semibold my-8 flex flex-col">
                 <p>
                   {
                     stories.find((story) => story.id === storyId)?.summary
                       ?.title
                   }
                 </p>
+          <small class="font-normal text-white my-2 text-sm">{stories
+                      .find((story) => story.id === storyId)
+                      ?.published_at.replace("T", " ").split(".")[0]}</small>
 
                   <span class="text-base font-normal">
                     {stories
@@ -35,7 +38,7 @@ let stories = await getStories();
               </a>
           ))}
 {index < groups.length-1 &&
-          <hr class="h-px mt-8  border-0 bg-gray-500">}
+          <hr class="h-px my-8  border-0 bg-gray-500">}
 
         </div>
       ))

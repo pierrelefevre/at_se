@@ -17,21 +17,21 @@ console.log(filtered.length);
 
 <Layout title={"åt.se | " + topic} stories={stories}>
 
-  <span class="text-5xl text-white mb-10">{filtered.length > 0 ? filtered[0].category : "404: No stories with this topic"}</span>
+  <span class="text-5xl font-bold text-white mb-10">{filtered.length > 0 ? filtered[0].category : "404: No stories with this topic"}</span>
 
   <hr class="h-px my-8  border-0 bg-gray-500">
 
   {filtered.map((story, index) => story.summary && (
-      <a
-        href={"/stories/" + story.id} 
-        ><div
-        class="text-xl text-white font-semibold my-3">
-        <p>
-          {
-            story?.summary
-              ?.title
-          }
-        </p>
+      <a href={"/stories/" + story.id}>
+        <div class="text-xl text-white font-semibold my-8 flex flex-col">
+          <p>
+            {
+              story?.summary
+                ?.title
+            }
+          </p>
+
+          <small class="font-normal text-white my-2 text-sm">{story?.published_at.replace("T", " ").split(".")[0]}</small>
 
           <span class="text-base font-normal text-gray-300">
             {story?.summary?.body.split(" ")
