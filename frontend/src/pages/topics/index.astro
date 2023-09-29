@@ -1,0 +1,40 @@
+---
+import { getStories } from "../../db/db";
+const stories = await getStories();
+import Layout from "../../layouts/Layout.astro";
+
+let topics = [
+  "Nyheter",
+  "Inrikes",
+  "Utrikes",
+  "Ekonomi",
+  "Politik",
+  "Opinion",
+  "Sport",
+  "Nöje & kultur",
+  "Tech",
+];
+
+let topicLen = [];
+
+topics.forEach((topic) => {
+  topicLen.push(
+    stories.filter((story) => story.category.includes(topic)).length,
+  );
+});
+---
+
+<Layout title="åt.se" stories={stories}>
+  {
+    topics.map(
+      (topic, index) =>
+        topicLen[index] > 0 && (
+          <a href={"/topics/" + encodeURIComponent(topic.toLowerCase())}>
+            <div class="text-xl text-white font-semibold my-8 flex flex-col">
+              <p>{topic}</p>
+            </div>
+          </a>
+        ),
+    )
+  }
+</Layout>

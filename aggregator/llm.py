@@ -42,8 +42,7 @@ def summarize(headline):
 
 def _summarize(article):
 
-    body = "skriv om artikeln nedan till ett lättläst stycke. Texten ska vara opartisk och professionell. du ska svara i JSON format med fälten title och body: som följande: {\"title\": \"...\", \"body\": \"...\"}."
-
+    body = "sammanfatta artikeln nedan till cirka 100-200 ord i 1-3 stycken. Texten ska vara lättläst, opartisk och professionell. Använd ny rad när lämpligt så texten blir luftig. Ignorera länkar till samt information om poddar, nyhetspodd, premium tidningar Du ska också lägga till ett fält med hur viktig den här artikeln är för läsaren att klicka på, en siffra från 1-5. Du ska svara i JSON format med fälten title och body: som följande: {\"title\": \"...\", \"body\": \"...\", \"importance\": ...}."
     data = json.dumps(article)
 
     while num_tokens_from_messages([

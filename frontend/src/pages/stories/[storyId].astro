@@ -12,20 +12,34 @@ const story = stories.find((story) => story.id === parseInt(storyId));
 ---
 
 <Layout title={"åt.se | " + story?.summary?.title} stories={stories}>
-  <p
-    class="my-5 text-3xl font-bold tracking-tight text-white"
-  >
-  {story?.summary?.title}
-</p>
-
-  <small class="font-normal text-white my-5">{story?.published_at.replace("T", " ").split(".")[0]}</small>
+  <p class="my-5 text-3xl font-bold tracking-tight text-white">
+    {story?.summary?.title}
+  </p>
+              
+  <div class="my-2 flex justify-start items-center space-x-2">
+    <small class="font-light text-white text-sm">
+      {story?.published_at.replace("T", " ").split(".")[0]}
+    </small>
+    <small class="font-light text-gray-500 text-sm">-</small>
+    <small class="font-light text-white text-sm">
+      {story?.category}
+    </small>
+    {story?.importance &&
+      <small class="font-light text-gray-500 text-sm">-</small>
+      <small class="font-light text-white text-sm">
+        {story?.importance}
+      </small>
+    }
+  </div>
 
   <p class="font-normal text-white my-5">{story?.summary?.body}</p>
 
+  <hr class="h-px my-8 border-0 bg-gray-500" />
+
   <a
     href={story?.url}
-    class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline mx-1">
-    View source at expressen.se
+    class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline mx-1"
+  >
+    Läs originalet på expressen.se
   </a>
-
 </Layout>

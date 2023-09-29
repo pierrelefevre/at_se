@@ -9,38 +9,55 @@ const { topic } = Astro.params;
 const filtered = stories.filter(
   (story) =>
     encodeURIComponent(story.category.toLowerCase()) ===
-    encodeURIComponent(topic.toLowerCase())
+    encodeURIComponent(topic.toLowerCase()),
 );
 
 console.log(filtered.length);
 ---
 
 <Layout title={"åt.se | " + topic} stories={stories}>
+  <span class="text-5xl font-bold text-white mb-10"
+    >{
+      filtered.length > 0
+        ? filtered[0].category
+        : "404: No stories with this topic"
+    }</span
+  >
 
-  <span class="text-5xl font-bold text-white mb-10">{filtered.length > 0 ? filtered[0].category : "404: No stories with this topic"}</span>
+  <hr class="h-px my-8 border-0 bg-gray-500" />
 
-  <hr class="h-px my-8  border-0 bg-gray-500">
+  {
+    filtered.map(
+      (story, index) =>
+        story.summary && (
+          <a href={"/stories/" + story.id}>
+            <div class="text-xl text-white font-semibold my-8 flex flex-col">
+              <p>{story?.summary?.title}</p>
+              
+              <div class="my-2 flex justify-start items-center space-x-2">
+                  <small class="font-light text-white text-sm">
+                    {story?.published_at.replace("T", " ").split(".")[0]}
+                  </small>
+                  <small class="font-light text-gray-500 text-sm">-</small>
+                  <small class="font-light text-white text-sm">
+                    {story?.category}
+                  </small>
+                  {story?.importance &&
+                    <small class="font-light text-gray-500 text-sm">-</small>
+                    <small class="font-light text-white text-sm">
+                      {story?.importance}
+                    </small>
+                  }
+                </div>
 
-  {filtered.map((story, index) => story.summary && (
-      <a href={"/stories/" + story.id}>
-        <div class="text-xl text-white font-semibold my-8 flex flex-col">
-          <p>
-            {
-              story?.summary
-                ?.title
-            }
-          </p>
-
-          <small class="font-normal text-white my-2 text-sm">{story?.published_at.replace("T", " ").split(".")[0]}</small>
-
-          <span class="text-base font-normal text-gray-300">
-            {story?.summary?.body.split(" ")
-              .slice(0, 20)
-              .join(" ") + "..."}
-          </span>
-        </div>
-      </a>
-  ))}
+              <span class="text-base font-normal text-gray-300">
+                {story?.summary?.body.split(" ").slice(0, 20).join(" ") + "..."}
+              </span>
+            </div>
+          </a>
+        ),
+    )
+  }
 </Layout>
 
 <style>

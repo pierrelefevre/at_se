@@ -1,0 +1,111 @@
+---
+import { getStories } from "../../db/db";
+const stories = await getStories();
+
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title={"åt.se | faq"} stories={stories}>
+  <p class="my-5 text-3xl font-bold tracking-tight text-white">FAQ</p>
+
+  <p class="font-normal text-white my-5">
+    Här samlar vi de vanligaste frågorna och svaren om åt.se.
+  </p>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">Vad är åt.se och vad gör det?</p>
+    <p class="py-2 font-normal text-white">
+      Åt.se är en webbplats som genererar sammanfattningar av aktuella nyheter i
+      Sverige med hjälp av artificiell intelligens (AI). Vår tjänst samlar in
+      och sammanfattar nyhetsartiklar från olika källor för att ge användarna en
+      översikt över de viktigaste nyheterna.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">
+      Vad är det för siffra som står vid varje artikel?
+    </p>
+    <p class="py-2 font-normal text-white">
+      Siffran är ett mått på hur viktig artikeln bedöms vara, på en skala från
+      1-5. Ju högre siffra, desto viktigare är artikeln.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">Hur fungerar åt.se?</p>
+    <p class="py-2 font-normal text-white">
+      Åt.se använder AI-modeller för att analysera och sammanfatta nyheter. Vår
+      AI-algoritm extraherar central information från nyhetsartiklar och skapar
+      korta sammanfattningar för användarna att läsa.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">
+      Kan jag lita på informationen på åt.se?
+    </p>
+    <p class="py-2 font-normal text-white">
+      Alla innehåll på åt.se genereras av vår AI och ska betraktas som en
+      översikt. Vi uppmanar alltid våra användare att dubbelkolla och kolla
+      källorna innan de tar några beslut baserade på våra sammanfattningar. Vi
+      tar inget ansvar för noggrannheten eller fullständigheten i de genererade
+      sammanfattningarna.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">Är åt.se gratis att använda?</p>
+    <p class="py-2 font-normal text-white">
+      Ja, åt.se är helt gratis att använda. Du behöver inte betala något för att
+      få tillgång till våra nyhetssammanfattningar.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">
+      Hur ofta uppdateras innehållet på åt.se?
+    </p>
+    <p class="py-2 font-normal text-white">
+      Vår tjänst uppdateras regelbundet för att hålla dig informerad om de
+      senaste nyheterna. Vi strävar efter att uppdatera sammanfattningarna så
+      snart det finns ny information tillgänglig.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">
+      Kan jag använda innehållet på åt.se i mitt eget arbete eller projekt?
+    </p>
+    <p class="py-2 font-normal text-white">
+      Ja, du är välkommen att använda våra sammanfattningar för personligt bruk
+      eller i icke-kommersiella projekt. Vi ber dock att du anger källan som
+      åt.se om du väljer att dela eller publicera vårt innehåll.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">
+      Hur kan jag kontakta åt.se om jag har fler frågor eller feedback?
+    </p>
+    <p class="py-2 font-normal text-white">
+      Om du har ytterligare frågor, feedback eller behöver hjälp kan du kontakta
+      oss genom att <a
+        href="https://github.com/pierrelefevre/at_se/issues/new"
+        class="underline underline-offset-2"
+        >skapa en Issue på vår GitHub-sida</a
+      >.
+    </p>
+  </div>
+
+  <div class="my-5">
+    <p class="py-2 font-bold text-white">Är den här FAQ:n AI-genererad?</p>
+    <p class="py-2 font-normal text-white">
+      Ja, den här FAQ:n är skapad med hjälp av AI. Vi tyckte det skulle vara
+      lämpligt att använda samma teknik som vi använder för att sammanfatta
+      nyheter för att skapa svar på dina vanliga frågor. Men oroa dig inte, vi
+      har människor som övervakar och finjusterar våra AI-processer... Eller har
+      vi? Ingen vet.
+    </p>
+  </div>
+</Layout>

@@ -21,7 +21,7 @@ let topicLen = [];
 
 topics.forEach((topic) => {
   topicLen.push(
-    stories.filter((story) => story.category.includes(topic)).length
+    stories.filter((story) => story.category.includes(topic)).length,
   );
 });
 ---
@@ -36,6 +36,17 @@ topics.forEach((topic) => {
         >åt.se</span
       >
     </a>
+
+    <div class="block md:hidden">
+      <a
+        href={"/topics"}
+        class="py-2 pl-3 pr-4 md:p-0 text-white md:text-blue-500 underline underline-offset-2"
+        aria-current="page"
+      >
+        Kategorier
+      </a>
+    </div>
+
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul
         class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700"
@@ -47,13 +58,13 @@ topics.forEach((topic) => {
                 <li>
                   <a
                     href={"/topics/" + encodeURIComponent(topic.toLowerCase())}
-                    class="block py-2 pl-3 pr-4 bg-blue-700 rounded md:bg-transparent  md:p-0 text-white md:text-blue-500"
+                    class="block py-2 pl-3 pr-4 bg-blue-700 rounded md:bg-transparent  md:p-0 text-white"
                     aria-current="page"
                   >
                     {topic}
                   </a>
                 </li>
-              )
+              ),
           )
         }
       </ul>

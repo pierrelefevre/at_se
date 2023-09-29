@@ -16,17 +16,17 @@ const { title, stories } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-	<link rel="icon"  href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body>
     <Navbar stories={stories} />
-	<Banner stories={stories} />
+    <Banner stories={stories} />
     <main class="max-w-2xl m-auto p-5 min-h-[80vh]">
       <slot />
     </main>
-	<Footer />
+    <Footer />
   </body>
 </html>
 <style is:global>
