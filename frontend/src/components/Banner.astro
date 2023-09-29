@@ -1,0 +1,31 @@
+---
+interface Props {
+  stories: any[];
+}
+
+const { stories } = Astro.props;
+
+---
+
+<div
+  id="sticky-banner"
+  tabindex="-1"
+  class="left-0 z-50 flex justify-between w-full p-4 border-b bg-gray-700 border-gray-600 mb-3"
+>
+  <div class="flex items-center mx-auto ">
+    <p
+      class="flex items-center text-sm font-normal text-gray-400 flex-wrap"
+    >
+      <span class="mx-1 font-bold">Senaste nytt</span>
+
+      <span class="mx-1">{stories[0]?.published_at.replace("T", " ").split(".")[0]}</span>
+      <a
+        href={"/stories/" + stories[0].id}
+        class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline mx-1"
+      >
+        {stories[0]?.summary?.title}
+      </a>
+
+    </p>
+  </div>
+</div>

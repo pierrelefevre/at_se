@@ -1,0 +1,62 @@
+---
+interface Props {
+  stories: any[];
+}
+
+const { stories } = Astro.props;
+
+let topics = [
+  "Nyheter",
+  "Inrikes",
+  "Utrikes",
+  "Ekonomi",
+  "Politik",
+  "Opinion",
+  "Sport",
+  "Nöje & kultur",
+  "Tech",
+];
+
+let topicLen = [];
+
+topics.forEach((topic) => {
+  topicLen.push(
+    stories.filter((story) => story.category.includes(topic)).length
+  );
+});
+---
+
+<nav class="bg-gray-900">
+  <div
+    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+  >
+    <a href="/" class="flex items-center">
+      <span
+        class="self-center text-2xl font-semibold whitespace-nowrap text-white"
+        >åt.se</span
+      >
+    </a>
+    <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <ul
+        class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800 md:bg-gray-900 border-gray-700"
+      >
+        {
+          topics.map(
+            (topic, index) =>
+              topicLen[index] > 0 && (
+                <li>
+                  <a
+                    href={"/topics/" + encodeURIComponent(topic.toLowerCase())}
+                    class="block py-2 pl-3 pr-4 bg-blue-700 rounded md:bg-transparent  md:p-0 text-white md:text-blue-500"
+                    aria-current="page"
+                  >
+                    {topic + " (" + topicLen[index] + ")"}
+                  </a>
+                </li>
+              )
+          )
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

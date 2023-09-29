@@ -6,89 +6,38 @@ import { getStories, getGroups } from "../db/db";
 let groups = await getGroups();
 let stories = await getStories();
 
-let topics = [
-  "Nyheter",
-  "Inrikes",
-  "Utrikes",
-  "Ekonomi",
-  "Politik",
-  "Opinion",
-  "Sport",
-  "Nöje & kultur",
-  "Tech",
-];
-
-let topicLen = []
-
-topics.forEach((topic) => {
-  topicLen.push(stories.filter((story) => story.category.includes(topic)).length)
-})
 ---
 
-<Layout title="åt.se">
-  <main>
-    <a
-      href={"/stories/" + stories[0]?.id}
-      style="text-decoration: none; color: inherit"
-    >
-      <div class="instructions">
-        <strong>Senaste nytt</strong>
-        <h3>
-          {stories[0]?.summary?.title}
-        </h3>
-        <small>{stories[0]?.published_at.replace("T", " ").split(".")[0]}</small
-        >
-
-        <p>{stories[0]?.summary?.body}</p>
-      </div>
-    </a>
-
-    <div class="topics" style="display:flex; flex-wrap:wrap">
-      {
-        topics.map((topic, index) => topicLen[index]>0 && (
-          <a
-            href={"/topics/" + encodeURIComponent(topic.toLowerCase())}
-            style="text-decoration: none; color: inherit; margin-left: .5rem; margin-right: .5rem"
-          >
-            <div class="topic">
-              <h3>{topic + " (" + topicLen[index] +")"}</h3>
-            </div>
-          </a>
-        ))
-      }
-    </div>
-
-    {
-      groups.map((group) => (
-        <div style="margin: 1rem; padding: 1rem; background: #282c34">
-          <h2>{group.name}</h2>
+<Layout title="åt.se" stories={stories}>
+    { groups.map((group, index) => (
+        <div class="my-5 p-3">
+          <p class="text-3xl text-white font-bold">{group.name}</p>
           {group.value.map((storyId, index) => (
-            <div>
               <a
-                href={"/stories/" + storyId}
-                style="text-decoration: none; color: inherit; font-weight: bolder"
-              >
+                href={"/stories/" + storyId} 
+                ><div
+                class="text-xl text-white font-semibold my-3">
                 <p>
                   {
                     stories.find((story) => story.id === storyId)?.summary
                       ?.title
                   }
                 </p>
-              </a>
 
-              {index === 0 && (
-                <p>
-                  {stories
-                    .find((story) => story.id === storyId)
-                    ?.summary?.body.split(" ")
-                    .slice(0, 20)
-                    .join(" ") + "..."}
-                </p>
-              )}
-            </div>
+                  <span class="text-base font-normal">
+                    {stories
+                      .find((story) => story.id === storyId)
+                      ?.summary?.body.split(" ")
+                      .slice(0, 20)
+                      .join(" ") + "..."}
+                  </span>
+                </div>
+              </a>
           ))}
+{index < groups.length-1 &&
+          <hr class="h-px mt-8  border-0 bg-gray-500">}
+
         </div>
       ))
     }
-  </main>
 </Layout>
