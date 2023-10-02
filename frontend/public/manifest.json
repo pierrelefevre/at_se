@@ -1,0 +1,22 @@
+{
+    "name": "åt.se",
+    "short_name": "åt.se",
+    "description": "åt.se is a AI generated summary of the current news feed in Sweden",
+    "icons": [
+        {
+            "src": "favicon/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": ".",
+    "theme_color": "#141c2d",
+    "background_color": "#141c2d",
+    "display": "standalone"
+  }
+  
