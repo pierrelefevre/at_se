@@ -17,7 +17,7 @@ def refresh():
 
     new = 0
     for new_story in new_stories:
-        if not any(story['title'] == new_story['title'] for story in stories):
+        if not any(story['url'] == new_story['url'] for story in stories):
             helpers.log(f'Added {new_story["title"]}')
             new_story['id'] = helpers.get_next_id()
             new_story['summary'] = llm.summarize(new_story)
