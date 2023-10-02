@@ -106,7 +106,7 @@ def pick_headline_topic(headline):
 
 
 def _pick_headline_topic(headline):
-    topics = "Nyheter, Inrikes, Utrikes, Ekonomi, Politik, Opinion, Sport, Nöje & kultur, Tech"
+    topics = "Inrikes, Utrikes, Ekonomi, Politik, Opinion, Sport, Nöje & kultur, Tech"
     body = f"Vilken kategori passar bäst för denna titel: {headline}? Svara med en av följande kategorier: {topics} i JSON format med fältet category: som följande: {{\"category\": \"...\"}}."
 
     data = json.dumps(headline)
