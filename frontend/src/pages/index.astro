@@ -23,7 +23,7 @@ let stories = await getStoriesById(storyIds);
             (story) => parseInt(story.id) === parseInt(storyId),
           );
 
-          if (!story.summary) return null;
+          if (!story?.summary) return null;
 
           return (
             <a href={"/stories/" + storyId}>
