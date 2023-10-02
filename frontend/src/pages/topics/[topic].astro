@@ -1,34 +1,34 @@
 ---
-import { getStories } from "../../db/db";
+import { getStoriesByTopic } from "../../db/db";
 import Layout from "../../layouts/Layout.astro";
-
-let stories = await getStories();
+import topics from "../../db/topics.json";
 
 const { topic } = Astro.params;
 
-const filtered = stories.filter(
-  (story) =>
-    encodeURIComponent(story.category.toLowerCase()) ===
+// check that topic is in topics
+const filtered = topics.filter(
+  (t) =>
+    encodeURIComponent(t.toLowerCase()) ===
     encodeURIComponent(topic.toLowerCase()),
 );
 
-console.log(filtered.length);
+if (filtered.length === 0) {
+  return Astro.redirect("/");
+}
+
+let stories = await getStoriesByTopic(topic);
+
 ---
 
-<Layout title={"åt.se | " + topic} stories={stories}>
-  <span class="text-5xl font-bold text-white mb-10"
-    >{
-      filtered.length > 0
-        ? filtered[0].category
-        : "404: No stories with this topic"
-    }</span
-  >
+<Layout title={"åt.se | " + topic} >
+  <span class="text-5xl font-bold text-white mb-10">
+    {stories[0].category}
+  </span>
 
   <hr class="h-px my-8 border-0 bg-gray-500" />
-
   {
-    filtered.map(
-      (story, index) =>
+    stories.map(
+      (story) =>
         story.summary && (
           <a href={"/stories/" + story.id}>
             <div class="text-xl text-white font-semibold my-8 flex flex-col">

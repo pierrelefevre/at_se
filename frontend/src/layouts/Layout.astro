@@ -5,10 +5,9 @@ import Footer from "../components/Footer.astro";
 
 export interface Props {
   title: string;
-  stories: any[];
 }
 
-const { title, stories } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,8 +20,8 @@ const { title, stories } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Navbar stories={stories} />
-    <Banner stories={stories} />
+    <Navbar />
+    <Banner />
     <main class="max-w-2xl m-auto p-5 min-h-[80vh]">
       <slot />
     </main>

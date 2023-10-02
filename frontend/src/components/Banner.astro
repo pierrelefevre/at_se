@@ -1,9 +1,9 @@
 ---
-interface Props {
-  stories: any[];
-}
+import { getLatestStory } from "../db/db";
 
-const { stories } = Astro.props;
+const lastest = await getLatestStory();
+const latestStory = lastest[0];
+
 ---
 
 <div
@@ -16,13 +16,13 @@ const { stories } = Astro.props;
       <span class="mx-1 font-bold">Senaste nytt</span>
 
       <span class="mx-1"
-        >{stories[0]?.published_at.replace("T", " ").split(".")[0]}</span
+        >{latestStory.published_at.replace("T", " ").split(".")[0]}</span
       >
       <a
-        href={"/stories/" + stories[0].id}
+        href={"/stories/" + latestStory.id}
         class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline mx-1"
       >
-        {stories[0]?.summary?.title}
+        {latestStory.summary?.title}
       </a>
     </p>
   </div>

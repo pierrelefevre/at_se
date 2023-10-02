@@ -1,11 +1,9 @@
 ---
-import { getStories } from "../../db/db";
-const stories = await getStories();
 
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title={"åt.se | faq"} stories={stories}>
+<Layout title={"åt.se | faq"} >
   <p class="my-5 text-3xl font-bold tracking-tight text-white">FAQ</p>
 
   <p class="font-normal text-white my-5">

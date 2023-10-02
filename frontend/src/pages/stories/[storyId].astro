@@ -1,21 +1,20 @@
 ---
-import { getStories } from "../../db/db";
+import { getStoryById } from "../../db/db";
 import Layout from "../../layouts/Layout.astro";
 
-let stories = await getStories();
-
 const { storyId } = Astro.params;
+let story = await getStoryById(parseInt(storyId));
 
-console.log(storyId);
-
-const story = stories.find((story) => story.id === parseInt(storyId));
+if (!story) {
+  return Astro.redirect("/");
+}
 ---
 
-<Layout title={"åt.se | " + story?.summary?.title} stories={stories}>
+<Layout title={"åt.se | " + story?.summary?.title}>
   <p class="my-5 text-3xl font-bold tracking-tight text-white">
     {story?.summary?.title}
   </p>
-              
+
   <div class="my-2 flex justify-start items-center space-x-2">
     <small class="font-light text-white text-sm">
       {story?.published_at.replace("T", " ").split(".")[0]}
@@ -24,11 +23,15 @@ const story = stories.find((story) => story.id === parseInt(storyId));
     <small class="font-light text-white text-sm">
       {story?.category}
     </small>
-    {story?.importance &&
-      <small class="font-light text-gray-500 text-sm">-</small>
-      <small class="font-light text-white text-sm">
-        {story?.importance}
-      </small>
+    {
+      story?.importance && (
+        <>
+          <small class="font-light text-gray-500 text-sm">-</small>
+          <small class="font-light text-white text-sm">
+            {story?.importance}
+          </small>
+        </>
+      )
     }
   </div>
 

@@ -3,13 +3,17 @@ const startTimer = Date.now();
 
 import Layout from "../layouts/Layout.astro";
 
-import { getStories, getGroups } from "../db/db";
+import { getStoriesById, getGroups } from "../db/db";
 
 let groups = await getGroups();
-let stories = await getStories();
+
+let storyIds = groups.map((group) => group.value).flat();
+
+let stories = await getStoriesById(storyIds);
+
 ---
 
-<Layout title="åt.se" stories={stories}>
+<Layout title="åt.se">
   {
     groups.map((group, index) => (
       <div class="mb-5">
