@@ -82,7 +82,8 @@ def save_groups(groups):
         # groups is a dict, convert to list
         groups_list = []
         for key in groups:
-            groups_list.append({"name": key, "value": groups[key]})
+            group_stories = list(get_db()['stories'].find({'id': {'$in': groups[key]}}))
+            groups_list.append({"name": key, "value": groups[key], "stories": group_stories})
         get_db()['groups'].delete_many({})
         get_db()['groups'].insert_many(groups_list)
 
