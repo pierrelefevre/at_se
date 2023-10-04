@@ -25,7 +25,7 @@ def scrape_story(url):
             class_="article__preamble").find_all('p')]).replace("\xa0", "")
 
         if preamble.startswith("Premium"):
-            preamble = preamble[7:]
+            return None
 
         article["preamble"] = preamble
         full_text += preamble + "\n"
@@ -89,4 +89,5 @@ def scrape():
 
 
 if __name__ == '__main__':
-    print(json.dumps(scrape()))
+    print(json.dumps(scrape_story("https://www.expressen.se/nyheter/en-mycket-pinsam-miss-for-nobel/")))
+    # print(json.dumps(scrape()))
