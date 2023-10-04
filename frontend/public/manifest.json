@@ -1,6 +1,6 @@
 {
-  "name": "åt.se",
-  "short_name": "åt - AI generated news summary",
+  "name": "åt.se - AI generated news summary",
+  "short_name": "åt",
   "description": "åt.se is a AI generated summary of the current news feed in Sweden",
   "icons": [
     {
