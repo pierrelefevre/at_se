@@ -1,12 +1,32 @@
 import { MongoClient } from "mongodb";
 
+let cachedClient = null;
+
 export const getClient = () => {
   const uri = import.meta.env.MONGO_URI;
   if (!uri) {
     throw new Error("Please define the MONGO_URI environment variable");
   }
-  const client = new MongoClient(uri);
-  return client;
+
+  // check if client is already cached
+  if (!cachedClient) {
+    cachedClient = new MongoClient(uri);
+  }
+
+  // check if client is still connected
+  checkMongoAlive(cachedClient).then((res) => {
+    if (!res) {
+      cachedClient = new MongoClient(uri);
+    }
+  });
+
+  return cachedClient;
+};
+
+export const checkMongoAlive = async (client) => {
+  await client.connect();
+  const res = await client.db("admin").command({ ping: 1 });
+  return res.ok === 1;
 };
 
 export const getDb = () => {
