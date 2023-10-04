@@ -73,7 +73,7 @@ def group_headlines(headline):
 
 
 def _group_headlines(headlines):
-    body = "Gruppera de mest intressanta titlar i 3 grupper. Svara i JSON format med nyhetens namn som nyckel och en array av ID till artiklarna som ingår i den kategorin. Exempel: {\"INTRESSANT TITEL\": [...],  \"INTRESSANT TITEL\": [...]}. JSON strängen måste vara komplett. Namnen till kategorierna ska vara max några ord men spännande och reflektera kopplingen mellan artiklarna. Varje artikel får vara med i mest en grupp, och grupperna får innehålla max 5 artiklar."
+    body = "Gruppera de mest intressanta titlar i 3 grupper. Svara i JSON format med nyhetens namn som nyckel och en array av ID till artiklarna som ingår i den kategorin. Exempel: {\"Morden i Jordbro\": [...],  \"Kriget i Ukraina\": [...]}. JSON strängen måste vara komplett. Namnen till kategorierna ska vara max några ord men spännande och reflektera kopplingen mellan artiklarna. Varje artikel får vara med i mest en grupp, och grupperna får innehålla max 5 artiklar."
 
     data = json.dumps(headlines).replace("}", "").replace("{", "")
 
