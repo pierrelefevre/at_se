@@ -31,11 +31,11 @@ def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0613"):
   See https://github.com/openai/openai-python/blob/main/chatml.md for information on how messages are converted to tokens.""")
 
 
-def summarize(headline):
+def summarize(article):
     # allow 3 retries for a valid response
     for i in range(3):
         try:
-            return _summarize(headline)
+            return _summarize(article)
         except:
             pass
 
