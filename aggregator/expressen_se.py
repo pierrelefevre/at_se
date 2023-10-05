@@ -21,6 +21,12 @@ def scrape_story(url):
         pass
 
     try:
+        location = soup.find("a", href=lambda href: href and "/tagg/location" in href).get_text()
+        article["location"] = location
+    except:
+        pass
+
+    try:
         preamble = '\n'.join([p.get_text() for p in soup.find(
             class_="article__preamble").find_all('p')]).replace("\xa0", "")
 
@@ -73,6 +79,8 @@ def scrape():
             href = "https://www.expressen.se" + href
         if "premium" in href:
             continue
+        if "/tv/" in href:
+            continue
         news_links.append(href)
 
     articles = []
@@ -89,5 +97,5 @@ def scrape():
 
 
 if __name__ == '__main__':
-    print(json.dumps(scrape_story("https://www.expressen.se/nyheter/en-mycket-pinsam-miss-for-nobel/")))
+    print(json.dumps(scrape_story("https://www.expressen.se/tv/nyheter/polisanmals-efter-skamtet-kommer-aka-in-/")))
     # print(json.dumps(scrape()))
