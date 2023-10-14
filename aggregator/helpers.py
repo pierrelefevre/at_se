@@ -12,8 +12,12 @@ testing = os.getenv('TESTING')
 
 
 def get_db():
-    client = pymongo.MongoClient(os.getenv('MONGO_URI'))
-    return client['at']
+    if testing:
+        client = pymongo.MongoClient(os.getenv('MONGO_URI'))
+        return client['at-testing']
+    else:
+        client = pymongo.MongoClient(os.getenv('MONGO_URI'))
+        return client['at']
 
 
 def get_timestamp():
@@ -21,73 +25,48 @@ def get_timestamp():
 
 
 def get_max_id():
-    max_id = 0
-    if testing:
-        max_id = int(open('db/max_id.txt').read())
-    else:
-        max_id = int(get_db()['metadata'].find_one(
-            {'name': 'max_id'})['value'])
-        if max_id == None:
-            max_id = 0
+    max_id = int(get_db()['metadata'].find_one(
+        {'name': 'max_id'})['value']) or 0
     return max_id
 
 
 def get_next_id():
     max_id = get_max_id()
     next_id = max_id + 1
-    if testing:
-        open('db/max_id.txt', 'w').write(str(next_id))
-    else:
-        get_db()['metadata'].update_one(
-            {'name': 'max_id'}, {'$set': {'value': next_id}})
+    get_db()['metadata'].update_one(
+        {'name': 'max_id'}, {'$set': {'value': next_id}})
     return next_id
 
 
 def get_stories():
-    stories = []
-    if testing:
-        stories = json.loads(open('db/stories.json').read())
-        stories.sort(key=lambda story: story['published_at'], reverse=True)
-    else:
-        stories = list(get_db()['stories'].find({}).sort('published_at', -1))
+    stories = list(get_db()['stories'].find({}).sort('published_at', -1))
     return stories
 
 
 def save_stories(stories):
-    if testing:
-        stories.sort(key=lambda story: story['published_at'], reverse=True)
-        open('db/stories.json', 'w').write(json.dumps(stories))
-    else:
-        get_db()['stories'].delete_many({})
-        get_db()['stories'].insert_many(stories)
+    get_db()['stories'].delete_many({})
+    get_db()['stories'].insert_many(stories)
 
 
 def get_groups():
-    groups = []
-    if testing:
-        groups = json.loads(open('db/groups.json').read())
-    else:
-        # groups is a list, convert to dict
-        groups = {}
-        for group in list(get_db()['groups'].find({})):
-            groups[group['name']] = group['value']
-        
+    # groups is a list, convert to dict
+    groups = {}
+    for group in list(get_db()['groups'].find({})):
+        groups[group['name']] = group['value']
     return groups
 
 
 def save_groups(groups):
-    if testing:
-        open('db/groups.json', 'w').write(json.dumps(groups))
-    else:
-        # groups is a dict, convert to list
-        groups_list = []
-        for key in groups:
-            group_stories = list(get_db()['stories'].find({'id': {'$in': groups[key]}}))
-            groups_list.append({"name": key, "value": groups[key], "stories": group_stories})
-            log(f"Saved group {key} with {len(group_stories)} stories")
-            
-        get_db()['groups'].delete_many({})
-        get_db()['groups'].insert_many(groups_list)
+    groups_list = []
+    for key in groups:
+        group_stories = list(get_db()['stories'].find(
+            {'id': {'$in': groups[key]}}))
+        groups_list.append(
+            {"name": key, "value": groups[key], "stories": group_stories})
+        log(f"Saved group {key} with {len(group_stories)} stories")
+
+    get_db()['groups'].delete_many({})
+    get_db()['groups'].insert_many(groups_list)
 
 
 def log(message):
