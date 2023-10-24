@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import openai
 import os
 import tiktoken
+import helpers
 
 load_dotenv()
 openai.organization = os.getenv("openai_org")
@@ -63,11 +64,32 @@ def _summarize(article):
     return summary
 
 
-def group_headlines(headline):
+def group_headlines(headlines):
     # allow 3 retries for a valid response
-    for i in range(3):
+    for i in range(10):
         try:
-            return _group_headlines(headline)
+            valid = True
+            groups = _group_headlines(headlines)
+            
+            # Ensure that there are 3 groups
+            if len(groups.keys()) != 3:
+                valid = False
+            
+            # Ensure that each group has between 1 and 5 stories
+            for group_stories in groups.values():
+                if len(group_stories) > 5 or len(group_stories) < 1:
+                    valid = False
+                    break
+
+            # check if the group names contain numbers
+            for group_name in groups.keys():
+                if any(char.isdigit() for char in group_name):
+                    valid = False
+                    break
+                    
+            if valid:
+                helpers.log(f'Grouping took {i+1} tries')
+                return groups
         except:
             pass
 
@@ -126,3 +148,13 @@ def _pick_headline_topic(headline):
     message = response["choices"][0]["message"]["content"]
     category = json.loads(message)["category"]
     return category
+
+
+def generate_image(headline):
+    response = openai.Image.create(
+        prompt=headline,
+        n=1,
+        size="256x256"
+    )
+    image_url = response['data'][0]['image']
+    return image_url

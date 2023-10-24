@@ -72,3 +72,15 @@ def save_groups(groups):
 def log(message):
     processed = message.replace("\n", " ")
     print(f'{get_timestamp()} {processed}', file=sys.stderr)
+
+# get raw png bytes and convert to string
+def get_image(url):
+    import requests
+    from io import BytesIO
+    from PIL import Image
+    response = requests.get(url, headers={'User-Agent': chrome_user_agent})
+    image = Image.open(BytesIO(response.content))
+    image = image.convert('RGB')
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    return buffer.getvalue()
