@@ -1,4 +1,6 @@
 ---
+const startTimer = Date.now();
+
 import Layout from "../../layouts/Layout.astro";
 import topics from "../../db/topics.json";
 console.log(topics);
@@ -14,4 +16,8 @@ console.log(topics);
       </a>
     ))
   }
+
+  <p class="text-sm text-gray-500 font-light">
+    Loaded {topics.length} topics in {Date.now() - startTimer} ms
+  </p>
 </Layout>

@@ -1,4 +1,6 @@
 ---
+const startTimer = Date.now();
+
 import { getStoryById } from "../../db/db";
 import Layout from "../../layouts/Layout.astro";
 
@@ -41,8 +43,14 @@ if (!story) {
 
   <a
     href={story?.url}
-    class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline mx-1"
+    class="inline font-medium underline text-blue-500 underline-offset-2 decoration-500 decoration-solid hover:no-underline"
   >
     Läs originalet på expressen.se
   </a>
+
+  <p class="text-sm text-gray-500 font-light pt-10">
+    Loaded {JSON.stringify(story).split(" ").length} words in {
+      Date.now() - startTimer
+    } ms
+  </p>
 </Layout>
