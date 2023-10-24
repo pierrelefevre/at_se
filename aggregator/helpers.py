@@ -84,3 +84,9 @@ def get_image(url):
     buffer = BytesIO()
     image.save(buffer, format="PNG")
     return buffer.getvalue()
+
+
+def get_hash(story):
+    import hashlib
+    # hash story["full_text"]
+    return str(hashlib.sha256(story["full_text"].encode()))

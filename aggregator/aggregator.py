@@ -17,13 +17,15 @@ def refresh():
 
     new = 0
     for new_story in new_stories:
-        if not any(story['url'] == new_story['url'] for story in stories):
+        new_story['hash'] = helpers.get_hash(new_story)
+        if not any(story['hash'] == new_story["hash"] for story in stories):
             helpers.log(f'Added {new_story["title"]}')
             new_story['id'] = helpers.get_next_id()
             new_story['summary'] = llm.summarize(new_story)
             new_story['category'] = llm.pick_headline_topic(new_story['title'])
-            new_story['image_url'] = llm.generate_image(new_story['title'])
-            new_story['image_raw'] = helpers.get_image(new_story['image_url'])
+            # images are disabled for now
+            # new_story['image_url'] = llm.generate_image(new_story['title'])
+            # new_story['image_raw'] = helpers.get_image(new_story['image_url'])
             stories.append(new_story)
             new += 1
             helpers.save_stories(stories)
@@ -66,7 +68,8 @@ def group_headlines():
         headlines.append({'id': story['id'], 'title': story['title']})
     grouped = llm.group_headlines(headlines)
 
-    helpers.log(f'Grouped {len(stories)} stories into {len(grouped.keys())} groups')
+    helpers.log(
+        f'Grouped {len(stories)} stories into {len(grouped.keys())} groups')
 
     helpers.save_groups(grouped)
 
