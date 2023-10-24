@@ -68,7 +68,7 @@ def group_headlines():
 
     helpers.log(f'Grouped {len(stories)} stories into {len(grouped.keys())} groups')
 
-    # helpers.save_groups(grouped)
+    helpers.save_groups(grouped)
 
 
 def main():
