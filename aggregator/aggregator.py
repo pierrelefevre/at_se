@@ -28,13 +28,11 @@ def refresh():
             # new_story['image_raw'] = helpers.get_image(new_story['image_url'])
             stories.append(new_story)
             new += 1
-            helpers.save_stories(stories)
         else:
             helpers.log(f'Skipped {new_story["title"]}')
 
     helpers.log(f'Added {new} new stories, {len(stories)} total stories')
-
-    # return number of new stories
+    helpers.save_stories(stories)
     return new
 
 
@@ -44,17 +42,18 @@ def verify(stories):
         if 'summary' not in story:
             story['summary'] = llm.summarize(story)
             helpers.log(f'Fixed missing summary {story["title"]}')
-            helpers.save_stories(stories)
 
         if 'category' not in story:
             story['category'] = llm.pick_headline_topic(story['title'])
             helpers.log(f'Fixed missing category {story["title"]}')
-            helpers.save_stories(stories)
 
         if 'id' not in story:
             story['id'] = helpers.get_next_id()
             helpers.log(f'Fixed missing ID {story["title"]}')
-            helpers.save_stories(stories)
+
+        if 'hash' not in story:
+            story['hash'] = helpers.get_hash(story)
+            helpers.log(f'Fixed missing hash {story["title"]}')
 
     return stories
 
