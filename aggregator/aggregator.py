@@ -70,6 +70,31 @@ def generate_digest():
     db.save_digest(llm.generate_digest(headlines))
 
 
+def verify():
+    helpers.log('Verifying stories')
+
+    missing_summaries = db.get_missing_summaries()
+    for story in missing_summaries:
+        if 'summary' not in story:
+            story['summary'] = llm.summarize(story)
+            db.replace_story(story, story)
+            helpers.log(f'Fixed missing summary {story["title"]}')
+
+    missing_categories = db.get_missing_categories()
+    for story in missing_categories:
+        if 'category' not in story:
+            story['category'] = llm.pick_headline_topic(story['title'])
+            db.replace_story(story, story)
+            helpers.log(f'Fixed missing category {story["title"]}')
+
+    missing_ids = db.get_missing_ids()
+    for story in missing_ids:
+        if 'id' not in story:
+            story['id'] = helpers.get_next_id()
+            helpers.log(f'Fixed missing ID {story["title"]}')
+            db.replace_story(story, story)
+
+
 def main():
     while True:
         helpers.log('Refreshing...')

@@ -90,3 +90,12 @@ def save_groups(groups):
 
     get_db()['groups'].delete_many({})
     get_db()['groups'].insert_many(groups_list)
+
+def get_missing_summaries():
+    return list(get_db()['stories'].find({'summary': {'$exists': False}}))
+
+def get_missing_categories():
+    return list(get_db()['stories'].find({'category': {'$exists': False}}))
+
+def get_missing_ids():
+    return list(get_db()['stories'].find({'id': {'$exists': False}}))
