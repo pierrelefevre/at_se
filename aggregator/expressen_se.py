@@ -21,7 +21,8 @@ def scrape_story(url):
         pass
 
     try:
-        location = soup.find("a", href=lambda href: href and "/tagg/location" in href).get_text()
+        location = soup.find(
+            "a", href=lambda href: href and "/tagg/location" in href).get_text()
         article["location"] = location
     except:
         pass
@@ -62,6 +63,7 @@ def scrape_story(url):
 
 
 def scrape():
+    helpers.log("Expressen: Scraping")
     url = "https://www.expressen.se/nyhetsdygnet/"
 
     # chrome user agent
@@ -83,9 +85,11 @@ def scrape():
             continue
         news_links.append(href)
 
+    helpers.log(f"Expressen: {len(news_links)} articles")
+
     articles = []
 
-    for link in news_links:
+    for i, link in enumerate(news_links):
         try:
             article = scrape_story(link)
             if article is not None:
@@ -93,9 +97,11 @@ def scrape():
         except:
             pass
 
+    helpers.log("Expressen: Done")
     return articles
 
 
 if __name__ == '__main__':
-    print(json.dumps(scrape_story("https://www.expressen.se/tv/nyheter/polisanmals-efter-skamtet-kommer-aka-in-/")))
+    print(json.dumps(scrape_story(
+        "https://www.expressen.se/tv/nyheter/polisanmals-efter-skamtet-kommer-aka-in-/")))
     # print(json.dumps(scrape()))

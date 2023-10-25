@@ -70,11 +70,11 @@ def group_headlines(headlines):
         try:
             valid = True
             groups = _group_headlines(headlines)
-            
+
             # Ensure that there are 3 groups
             if len(groups.keys()) != 3:
                 valid = False
-            
+
             # Ensure that each group has between 1 and 5 stories
             for group_stories in groups.values():
                 if len(group_stories) > 5 or len(group_stories) < 1:
@@ -86,7 +86,7 @@ def group_headlines(headlines):
                 if any(char.isdigit() for char in group_name):
                     valid = False
                     break
-                    
+
             if valid:
                 helpers.log(f'Grouping took {i+1} tries')
                 return groups
@@ -150,11 +150,72 @@ def _pick_headline_topic(headline):
     return category
 
 
+def generate_digest(headlines):
+    # allow 3 retries for a valid response
+    for i in range(3):
+        try:
+            return _generate_digest(headlines)
+        except:
+            pass
+
+
+def _generate_digest(headlines):
+    body = "Skriv en översiktlig nyhetssammanfattning av det mest intressanta i följande nyheter. Du behöver inte ha med alla utan de nyheter som verkar mindre intressanta är bara att plocka bort.  "
+    data = json.dumps(headlines)
+
+    while num_tokens_from_messages([
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ]) > 4000:
+        data = data[0:-100]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": body},
+            {"role": "assistant", "content": data},
+        ]
+    )
+    message = response["choices"][0]["message"]["content"]
+    return message
+
+
+def translate_to_english(text):
+    # allow 3 retries for a valid response
+    for i in range(3):
+        try:
+            return _translate_to_english(text)
+        except:
+            pass
+
+
+def _translate_to_english(text):
+    body = "Translate the following text to English. The text is in Swedish and the translation should be in English."
+    data = json.dumps(text)
+
+    while num_tokens_from_messages([
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ]) > 4000:
+        data = data[0:-100]
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": body},
+            {"role": "assistant", "content": data},
+        ]
+    )
+    message = response["choices"][0]["message"]["content"]
+    return message
+
+
 def generate_image(headline):
+    eng = translate_to_english(headline)
     response = openai.Image.create(
-        prompt=headline,
+        prompt=eng,
         n=1,
         size="256x256"
     )
-    image_url = response['data'][0]['image']
+    image_url = response['data'][0]['url']
     return image_url
