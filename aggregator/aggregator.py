@@ -18,7 +18,19 @@ def refresh():
     new = 0
     for new_story in new_stories:
         new_story['hash'] = helpers.get_hash(new_story)
-        if not any(story['hash'] == new_story["hash"] for story in stories):
+
+        existing = stories.filter(lambda story: story['url'] == new_story['url'])
+        if existing:
+            existing = existing[0]
+
+        update = False
+        if existing and existing['hash'] != new_story['hash']:
+            update = True
+        
+        if not existing:
+            update = True
+
+        if update:
             helpers.log(f'Added {new_story["title"]}')
             new_story['id'] = helpers.get_next_id()
             new_story['summary'] = llm.summarize(new_story)
@@ -26,6 +38,8 @@ def refresh():
             # images are disabled for now
             # new_story['image_url'] = llm.generate_image(new_story['title'])
             # new_story['image_raw'] = helpers.get_image(new_story['image_url'])
+            if existing:
+                stories.remove(existing)
             stories.append(new_story)
             new += 1
         else:
@@ -34,7 +48,6 @@ def refresh():
     helpers.log(f'Added {new} new stories, {len(stories)} total stories')
     helpers.save_stories(stories)
     return new
-
 
 def verify(stories):
     helpers.log('Verifying stories')
