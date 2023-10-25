@@ -3,3 +3,4 @@ tiktoken
 pymongo
 bs4
 python-dotenv
+Pillow
