@@ -76,11 +76,7 @@ def save_digest(digest):
 
 
 def get_groups():
-    # groups is a list, convert to dict
-    groups = {}
-    for group in list(get_db()['groups'].find({})):
-        groups[group['name']] = group['value']
-    return groups
+    return list(get_db()['groups'].find({}))
 
 
 def save_groups(groups):

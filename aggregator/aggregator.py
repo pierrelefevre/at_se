@@ -46,7 +46,8 @@ def refresh():
 
     count = db.get_num_stories()
 
-    helpers.log(f'Added {new} new stories, updated {updated} stories, {count} total stories')
+    helpers.log(
+        f'Added {new} new stories, updated {updated} stories, {count} total stories')
     return new
 
 
@@ -64,10 +65,11 @@ def group_headlines():
 def generate_digest():
     helpers.log('Generating digest')
 
-    raw_headlines = db.get_headlines()
+    groups = db.get_groups()
     headlines = []
-    for headline in raw_headlines:
-        headlines.append(headline['title'])
+    for group in groups:
+        for story in group["stories"]:
+            headlines.append(story['summary'])
 
     db.save_digest(llm.generate_digest(headlines))
 
@@ -101,7 +103,7 @@ def main():
     while True:
         helpers.log('Verifying')
         verify()
-        
+
         helpers.log('Refreshing')
         new = refresh()
         if new > 0:

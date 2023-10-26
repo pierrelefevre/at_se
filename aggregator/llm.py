@@ -160,7 +160,7 @@ def generate_digest(headlines):
 
 
 def _generate_digest(headlines):
-    body = "Skriv en översiktlig nyhetssammanfattning av det mest intressanta i följande nyheter. Du behöver inte ha med alla utan de nyheter som verkar mindre intressanta är bara att plocka bort.  "
+    body = "Skriv en översiktlig nyhetssammanfattning i ett par meningar av det mest intressanta i följande nyheter. Använd inte punktlista. Du behöver inte ha med alla utan de nyheter som verkar mindre intressanta är bara att plocka bort.  "
     data = json.dumps(headlines)
 
     while num_tokens_from_messages([
