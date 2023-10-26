@@ -72,7 +72,7 @@ def get_digest():
 
 def save_digest(digest):
     get_db()['digest'].delete_many({})
-    get_db()['digest'].insert_one(digest)
+    get_db()['digest'].insert_one({"digest": digest})
 
 
 def get_groups():
