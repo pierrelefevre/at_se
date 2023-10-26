@@ -98,12 +98,17 @@ def verify():
 
 def main():
     while True:
-        helpers.log('Refreshing...')
+        helpers.log('Verifying')
+        verify()
+        
+        helpers.log('Refreshing')
         new = refresh()
         if new > 0:
+            helpers.log('New entries: grouping and generating digest')
             group_headlines()
+            generate_digest()
 
-        helpers.log('Sleeping for 10 minutes...')
+        helpers.log('Sleeping for 10 minutes')
         time.sleep(600)
 
 
