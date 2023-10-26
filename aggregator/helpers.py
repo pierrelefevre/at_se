@@ -13,7 +13,7 @@ def get_timestamp():
 
 def log(message, level="INFO"):
     processed = message.replace("\n", " ")
-    print(f'[{level}] {get_timestamp()} {processed}', file=sys.stderr)
+    print(f'{get_timestamp()} [{level}] {processed}', file=sys.stderr, end="\n")
 
 # get raw png bytes and convert to string
 

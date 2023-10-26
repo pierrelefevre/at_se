@@ -13,13 +13,13 @@ def refresh():
     helpers.log(f'Scraped {len(new_stories)} stories')
 
     new = 0
+    updated = 0
     for new_story in new_stories:
         new_story['hash'] = helpers.get_hash(new_story)
 
         existing = db.get_story_by_url(new_story['url'])
 
         if existing and existing['hash'] == new_story['hash']:
-            helpers.log(f'Skipped {new_story["title"]}')
             continue
 
         helpers.log(f'Added {new_story["title"]}')
@@ -39,13 +39,14 @@ def refresh():
 
         if existing:
             db.replace_story(existing, new_story)
+            updated += 1
         else:
             db.insert_story(new_story)
-        new += 1
+            new += 1
 
     count = db.get_num_stories()
 
-    helpers.log(f'Added {new} new stories, {count} total stories')
+    helpers.log(f'Added {new} new stories, updated {updated} stories, {count} total stories')
     return new
 
 
