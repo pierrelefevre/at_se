@@ -67,11 +67,13 @@ export const getStoriesById = async (ids) => {
   return stories;
 };
 
-export const getStoriesByTopic = async (topic) => {
+export const getStoriesByTopic = async (topic, from, pageLength) => {
   // find all stories with the given topic, not case sensitive.
   const stories = await getCollection("stories")
-    .find({ category: topic})
+    .find({ category: topic })
     .sort({ published_at: -1 })
+    .skip(from)
+    .limit(pageLength)
     .toArray();
   return stories;
 };
@@ -82,6 +84,6 @@ export const getStoryById = async (id) => {
 };
 
 export const getDigest = async () => {
-  const digest = await getCollection("digest").findOne({})
+  const digest = await getCollection("digest").findOne({});
   return digest;
-}
+};
