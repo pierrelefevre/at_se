@@ -40,6 +40,7 @@ def get_story_by_url(url):
 
 
 def replace_story(old, new):
+    new['id'] = old['id']
     get_db()['stories'].replace_one({'id': old['id']}, new)
     return new
 
@@ -64,12 +65,15 @@ def get_headlines():
         headlines.append({'id': story['id'], 'title': story['title']})
     return headlines
 
+
 def get_digest():
     get_db()['digest'].find_one({})
+
 
 def save_digest(digest):
     get_db()['digest'].delete_many({})
     get_db()['digest'].insert_one(digest)
+
 
 def get_groups():
     # groups is a list, convert to dict
@@ -91,11 +95,14 @@ def save_groups(groups):
     get_db()['groups'].delete_many({})
     get_db()['groups'].insert_many(groups_list)
 
+
 def get_missing_summaries():
     return list(get_db()['stories'].find({'summary': {'$exists': False}}))
 
+
 def get_missing_categories():
     return list(get_db()['stories'].find({'category': {'$exists': False}}))
+
 
 def get_missing_ids():
     return list(get_db()['stories'].find({'id': {'$exists': False}}))

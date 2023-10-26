@@ -3,14 +3,13 @@ const startTimer = Date.now();
 
 import Layout from "../layouts/Layout.astro";
 
-import { getGroups } from "../db/db";
+import { getGroups, getDigest } from "../db/db";
 
 let groups = await getGroups();
 
 const numStories = groups.reduce((acc, group) => {
   return acc + group.stories.length;
 }, 0);
-
 ---
 
 <Layout title="åt.se">
@@ -18,7 +17,7 @@ const numStories = groups.reduce((acc, group) => {
     groups.map((group, index) => (
       <div class="mb-5">
         <p class="text-3xl font-black text-white">{group.name.toUpperCase()}</p>
-        {group.stories.map((story) => {
+        {group.stories.map((story, i) => {
           if (!story?.summary) return null;
 
           return (
@@ -33,11 +32,11 @@ const numStories = groups.reduce((acc, group) => {
                   <small class="font-light text-white text-sm">
                     {story?.category}
                   </small>
-                  {story?.importance && (
+                  {story?.summary?.importance && (
                     <>
                       <small class="font-light text-gray-500 text-sm">-</small>
                       <small class="font-light text-white text-sm">
-                        {story?.importance}
+                        {story?.summary?.importance}
                       </small>
                     </>
                   )}

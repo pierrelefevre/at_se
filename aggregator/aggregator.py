@@ -27,14 +27,15 @@ def refresh():
         new_story['summary'] = llm.summarize(new_story)
         new_story['category'] = llm.pick_headline_topic(new_story['title'])
 
-        try:
-            image_url = llm.generate_image(new_story['title'])
-            if image_url:
-                new_story['image_url'] = image_url
-                new_story['image_raw'] = helpers.get_image(
-                    new_story['image_url'])
-        except Exception as e:
-            helpers.log(f'Failed to generate image: {e}', 'ERROR')
+        # image generation disabled for now, too expensive to run
+        # try:
+        #     image_url = llm.generate_image(new_story['title'])
+        #     if image_url:
+        #         new_story['image_url'] = image_url
+        #         new_story['image_raw'] = helpers.get_image(
+        #             new_story['image_url'])
+        # except Exception as e:
+        #     helpers.log(f'Failed to generate image: {e}', 'ERROR')
 
         if existing:
             db.replace_story(existing, new_story)

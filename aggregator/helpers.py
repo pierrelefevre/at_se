@@ -31,4 +31,5 @@ def get_image(url):
 
 
 def get_hash(story):
-    return str(hashlib.sha256(story["full_text"].encode()))
+    hash = hashlib.sha256(story["full_text"].encode('utf-8')).hexdigest()
+    return str(hash)

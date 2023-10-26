@@ -26,11 +26,11 @@ if (!story) {
       {story?.category}
     </small>
     {
-      story?.importance && (
+      story?.summary?.importance && (
         <>
           <small class="font-light text-gray-500 text-sm">-</small>
           <small class="font-light text-white text-sm">
-            {story?.importance}
+            {story?.summary?.importance}
           </small>
         </>
       )
