@@ -13,11 +13,17 @@ if (!story) {
 ---
 
 <Layout title={"åt.se | " + story?.summary?.title}>
-  <p class="my-5 text-3xl font-bold tracking-tight text-white">
+  <p
+    class="my-5 text-3xl font-bold tracking-tight text-white"
+    transition:name={"story-title" + story?.id}
+  >
     {story?.summary?.title}
   </p>
 
-  <div class="my-2 flex justify-start items-center space-x-2">
+  <div
+    class="my-2 flex justify-start items-center space-x-2"
+    transition:name={"story-meta" + story?.id}
+  >
     <small class="font-light text-white text-sm">
       {story?.published_at.replace("T", " ").split(".")[0]}
     </small>
@@ -37,7 +43,12 @@ if (!story) {
     }
   </div>
 
-  <p class="font-normal text-white my-5">{story?.summary?.body}</p>
+  <p
+    class="font-normal text-white my-5"
+    transition:name={"story-body" + story?.id}
+  >
+    {story?.summary?.body}
+  </p>
 
   <hr class="h-px my-8 border-0 bg-gray-500" />
 

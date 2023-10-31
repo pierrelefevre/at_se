@@ -154,7 +154,10 @@ def generate_digest(headlines):
     # allow 3 retries for a valid response
     for i in range(3):
         try:
-            return _generate_digest(headlines)
+            digest = _generate_digest(headlines)
+            digest = digest.replace("}", "").replace("{", "").replace("\"", "")
+            helpers.log(f'Digest took {i+1} tries')
+            return digest
         except:
             pass
 
@@ -170,7 +173,7 @@ def _generate_digest(headlines):
         data = data[0:-100]
 
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4",
         messages=[
             {"role": "system", "content": body},
             {"role": "assistant", "content": data},
