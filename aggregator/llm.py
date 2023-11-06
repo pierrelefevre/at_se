@@ -173,7 +173,7 @@ def _generate_digest(headlines):
         data = data[0:-100]
 
     response = openai.ChatCompletion.create(
-        model="gpt-4",
+        model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": body},
             {"role": "assistant", "content": data},
