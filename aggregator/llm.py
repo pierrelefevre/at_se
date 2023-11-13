@@ -1,14 +1,15 @@
 import json
 from dotenv import load_dotenv
 import openai
+from openai import OpenAI
+import os 
+
+client = OpenAI(api_key=os.getenv("openai_secret"), organization=os.getenv("openai_org"))
 import os
 import tiktoken
 import helpers
 
 load_dotenv()
-openai.organization = os.getenv("openai_org")
-openai.api_key = os.getenv("openai_secret")
-
 
 def num_tokens_from_messages(messages, model="gpt-3.5-turbo-0613"):
     """Returns the number of tokens used by a list of messages."""
@@ -52,14 +53,13 @@ def _summarize(article):
     ]) > 4000:
         data = data[0:-100]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": body},
-            {"role": "assistant", "content": data},
-        ]
-    )
-    message = response["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    messages=[
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ])
+    message = completion.choices[0].message.content
+    print(message)
     summary = json.loads(message)
     return summary
 
@@ -105,14 +105,12 @@ def _group_headlines(headlines):
     ]) > 4000:
         data = data[0:-100]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": body},
-            {"role": "assistant", "content": data},
-        ]
-    )
-    message = response["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    messages=[
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ])
+    message = completion.choices[0].message.content
 
     groups = json.loads(message)
     return groups
@@ -138,14 +136,12 @@ def _pick_headline_topic(headline):
     ]) > 4000:
         data = data[0:-100]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": body},
-            {"role": "assistant", "content": data},
-        ]
-    )
-    message = response["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    messages=[
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ])
+    message = completion.choices[0].message.content
     category = json.loads(message)["category"]
     return category
 
@@ -172,14 +168,12 @@ def _generate_digest(headlines):
     ]) > 4000:
         data = data[0:-100]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": body},
-            {"role": "assistant", "content": data},
-        ]
-    )
-    message = response["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    messages=[
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ])
+    message = completion.choices[0].message.content
     return message
 
 
@@ -202,12 +196,10 @@ def _translate_to_english(text):
     ]) > 4000:
         data = data[0:-100]
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": body},
-            {"role": "assistant", "content": data},
-        ]
-    )
-    message = response["choices"][0]["message"]["content"]
+    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    messages=[
+        {"role": "system", "content": body},
+        {"role": "assistant", "content": data},
+    ])
+    message = completion.choices[0].message.content
     return message
