@@ -41,7 +41,7 @@ def get_story_by_url(url):
     story = get_db()['stories'].find_one({'url': url})
     if not story:
         return None
-    
+
     del story["_id"]
     if "image_raw" in story:
         del story["image_raw"]
@@ -113,21 +113,24 @@ def save_groups(groups):
 
 
 def get_missing_summaries():
-    missing = list(get_db()['stories'].find({'summary': {'$exists': False}}))
+    missing = list(get_db()['stories'].find(
+        {'$or': [{'summary': None}, {'summary': {'$exists': False}}]}))
     for item in missing:
         del item["_id"]
     return missing
 
 
 def get_missing_categories():
-    missing = list(get_db()['stories'].find({'category': {'$exists': False}}))
+    missing = list(get_db()['stories'].find(
+        {'$or': [{'category': None}, {'category': {'$exists': False}}]}))
     for item in missing:
         del item["_id"]
     return missing
 
 
 def get_missing_ids():
-    missing = list(get_db()['stories'].find({'id': {'$exists': False}}))
+    missing = list(get_db()['stories'].find(
+        {'$or': [{'id': None}, {'id': {'$exists': False}}]}))
     for item in missing:
         del item["_id"]
     return missing
