@@ -59,7 +59,6 @@ def _summarize(article):
         {"role": "assistant", "content": data},
     ])
     message = completion.choices[0].message.content
-    print(message)
     summary = json.loads(message)
     return summary
 

@@ -18,7 +18,6 @@ def get_db():
 def get_max_id():
     max_id = int(get_db()['metadata'].find_one(
         {'name': 'max_id'})['value']) or 0
-    del max_id["_id"]
     return max_id
 
 
@@ -27,7 +26,6 @@ def get_next_id():
     next_id = max_id + 1
     get_db()['metadata'].update_one(
         {'name': 'max_id'}, {'$set': {'value': next_id}})
-    del next_id["_id"]
     return next_id
 
 
@@ -41,6 +39,9 @@ def get_story_by_id(id):
 
 def get_story_by_url(url):
     story = get_db()['stories'].find_one({'url': url})
+    if not story:
+        return None
+    
     del story["_id"]
     if "image_raw" in story:
         del story["image_raw"]
