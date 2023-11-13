@@ -18,6 +18,7 @@ def get_db():
 def get_max_id():
     max_id = int(get_db()['metadata'].find_one(
         {'name': 'max_id'})['value']) or 0
+    del max_id["_id"]
     return max_id
 
 
@@ -26,16 +27,23 @@ def get_next_id():
     next_id = max_id + 1
     get_db()['metadata'].update_one(
         {'name': 'max_id'}, {'$set': {'value': next_id}})
+    del next_id["_id"]
     return next_id
 
 
 def get_story_by_id(id):
     story = get_db()['stories'].find_one({'id': id})
+    del story["_id"]
+    if "image_raw" in story:
+        del story["image_raw"]
     return story
 
 
 def get_story_by_url(url):
     story = get_db()['stories'].find_one({'url': url})
+    del story["_id"]
+    if "image_raw" in story:
+        del story["image_raw"]
     return story
 
 
@@ -55,7 +63,13 @@ def get_num_stories():
 
 
 def get_latest_stories():
-    return list(get_db()['stories'].find({}).sort('published_at', -1).limit(30))
+    stories = list(get_db()['stories'].find(
+        {}).sort('published_at', -1).limit(30))
+    for story in stories:
+        del story["_id"]
+        if "image_raw" in story:
+            del story["image_raw"]
+    return stories
 
 
 def get_headlines():
@@ -67,7 +81,9 @@ def get_headlines():
 
 
 def get_digest():
-    get_db()['digest'].find_one({})
+    digest = get_db()['digest'].find_one({})
+    del digest["_id"]
+    return digest
 
 
 def save_digest(digest):
@@ -76,7 +92,10 @@ def save_digest(digest):
 
 
 def get_groups():
-    return list(get_db()['groups'].find({}))
+    groups = list(get_db()['groups'].find({}))
+    for group in groups:
+        del group["_id"]
+    return groups
 
 
 def save_groups(groups):
@@ -93,12 +112,21 @@ def save_groups(groups):
 
 
 def get_missing_summaries():
-    return list(get_db()['stories'].find({'summary': {'$exists': False}}))
+    missing = list(get_db()['stories'].find({'summary': {'$exists': False}}))
+    for item in missing:
+        del item["_id"]
+    return missing
 
 
 def get_missing_categories():
-    return list(get_db()['stories'].find({'category': {'$exists': False}}))
+    missing = list(get_db()['stories'].find({'category': {'$exists': False}}))
+    for item in missing:
+        del item["_id"]
+    return missing
 
 
 def get_missing_ids():
-    return list(get_db()['stories'].find({'id': {'$exists': False}}))
+    missing = list(get_db()['stories'].find({'id': {'$exists': False}}))
+    for item in missing:
+        del item["_id"]
+    return missing
