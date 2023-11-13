@@ -53,7 +53,7 @@ def _summarize(article):
     ]) > 4000:
         data = data[0:-100]
 
-    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": body},
         {"role": "assistant", "content": data},
@@ -104,7 +104,7 @@ def _group_headlines(headlines):
     ]) > 4000:
         data = data[0:-100]
 
-    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": body},
         {"role": "assistant", "content": data},
@@ -135,7 +135,7 @@ def _pick_headline_topic(headline):
     ]) > 4000:
         data = data[0:-100]
 
-    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": body},
         {"role": "assistant", "content": data},
@@ -167,7 +167,7 @@ def _generate_digest(headlines):
     ]) > 4000:
         data = data[0:-100]
 
-    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": body},
         {"role": "assistant", "content": data},
@@ -195,7 +195,7 @@ def _translate_to_english(text):
     ]) > 4000:
         data = data[0:-100]
 
-    completion = client.chat.completions.create(model="gpt-4-1106-preview",
+    completion = client.chat.completions.create(model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": body},
         {"role": "assistant", "content": data},
