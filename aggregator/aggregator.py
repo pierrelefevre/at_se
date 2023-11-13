@@ -78,6 +78,7 @@ def verify():
     helpers.log('Verifying stories')
 
     missing_summaries = db.get_missing_summaries()
+    helpers.log(f'Found {len(missing_summaries)} missing summaries')
     for story in missing_summaries:
         if 'summary' not in story:
             story['summary'] = llm.summarize(story)
@@ -85,6 +86,7 @@ def verify():
             helpers.log(f'Fixed missing summary {story["title"]}')
 
     missing_categories = db.get_missing_categories()
+    helpers.log(f'Found {len(missing_categories)} missing categories')
     for story in missing_categories:
         if 'category' not in story:
             story['category'] = llm.pick_headline_topic(story['title'])
@@ -92,11 +94,12 @@ def verify():
             helpers.log(f'Fixed missing category {story["title"]}')
 
     missing_ids = db.get_missing_ids()
+    helpers.log(f'Found {len(missing_ids)} missing IDs')
     for story in missing_ids:
         if 'id' not in story:
             story['id'] = helpers.get_next_id()
-            helpers.log(f'Fixed missing ID {story["title"]}')
             db.replace_story(story, story)
+            helpers.log(f'Fixed missing ID {story["title"]}')
 
 
 def main():
