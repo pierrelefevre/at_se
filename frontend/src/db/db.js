@@ -87,3 +87,13 @@ export const getDigest = async () => {
   const digest = await getCollection("digest").findOne({});
   return digest;
 };
+
+export const registerEvent = async (event, page) => {
+  const now = new Date();
+  const res = await getCollection("events").insertOne({
+    event: event,
+    page: page,
+    timestamp: now,
+  });
+  return res;
+};

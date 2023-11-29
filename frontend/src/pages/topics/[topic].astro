@@ -22,6 +22,10 @@ let from = Astro.url.searchParams.get("from") || 0;
 
 let pageLength = 30;
 let stories = await getStoriesByTopic(filtered[0], parseInt(from), pageLength);
+
+
+import { registerEvent } from "../../db/db";
+registerEvent("pageview", "topics/" + topic);
 ---
 
 <Layout title={"åt.se | " + topic}>

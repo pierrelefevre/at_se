@@ -10,6 +10,9 @@ let story = await getStoryById(parseInt(storyId));
 if (!story) {
   return Astro.redirect("/");
 }
+
+import { registerEvent } from "../../db/db";
+registerEvent("pageview", "stories/" + storyId);
 ---
 
 <Layout title={"åt.se | " + story?.summary?.title}>

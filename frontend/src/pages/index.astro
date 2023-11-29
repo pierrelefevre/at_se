@@ -3,7 +3,7 @@ const startTimer = Date.now();
 
 import Layout from "../layouts/Layout.astro";
 
-import { getGroups, getDigest } from "../db/db";
+import { getGroups, getDigest, registerEvent } from "../db/db";
 
 let groups = await getGroups();
 
@@ -12,6 +12,8 @@ const numStories = groups.reduce((acc, group) => {
 }, 0);
 
 let digest = await getDigest();
+
+registerEvent("pageview", "index");
 ---
 
 <Layout title="åt.se">

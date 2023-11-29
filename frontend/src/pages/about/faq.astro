@@ -1,6 +1,9 @@
 ---
 
 import Layout from "../../layouts/Layout.astro";
+
+import { registerEvent } from "../../db/db";
+registerEvent("pageview", "faq");
 ---
 
 <Layout title={"åt.se | faq"} >
