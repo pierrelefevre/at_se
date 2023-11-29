@@ -134,3 +134,7 @@ def get_missing_ids():
     for item in missing:
         del item["_id"]
     return missing
+
+def drop_story_by_id(id):
+    get_db()['stories'].delete_one({'id': id})
+    return True

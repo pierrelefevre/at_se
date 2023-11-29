@@ -105,7 +105,7 @@ def verify():
 def main():
     while True:
         helpers.log('Verifying')
-        verify()
+        # verify()
 
         helpers.log('Refreshing')
         new = refresh()
