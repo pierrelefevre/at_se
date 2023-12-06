@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 
 import Navbar from "../components/Navbar.astro";
 import Banner from "../components/Banner.astro";
@@ -21,27 +21,35 @@ const { title } = Astro.props;
     <!-- Cool stuff -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="manifest.json" />
-    <meta name="description" content="åt.se is a AI generated summary of the current news feed in Sweden">
-  
+    <meta
+      name="description"
+      content="åt.se is a AI generated summary of the current news feed in Sweden"
+    />
+
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="https://xn--t-1fa.se/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="åt.se">
-    <meta property="og:description" content="åt.se is a AI generated summary of the current news feed in Sweden">
-    <meta property="og:image" content="/og-wide.png">
-  
+    <meta property="og:url" content="https://xn--t-1fa.se/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="åt.se" />
+    <meta
+      property="og:description"
+      content="åt.se is a AI generated summary of the current news feed in Sweden"
+    />
+    <meta property="og:image" content="/og-wide.png" />
+
     <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="xn--t-1fa.se">
-    <meta property="twitter:url" content="https://xn--t-1fa.se/">
-    <meta name="twitter:title" content="åt.se">
-    <meta name="twitter:description" content="åt.se is a AI generated summary of the current news feed in Sweden">
-    <meta name="twitter:image" content="/og-wide.png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="xn--t-1fa.se" />
+    <meta property="twitter:url" content="https://xn--t-1fa.se/" />
+    <meta name="twitter:title" content="åt.se" />
+    <meta
+      name="twitter:description"
+      content="åt.se is a AI generated summary of the current news feed in Sweden"
+    />
+    <meta name="twitter:image" content="/og-wide.png" />
 
     <meta name="generator" content={Astro.generator} />
 
     <ViewTransitions />
-
 
     <title>{title}</title>
   </head>
@@ -52,22 +60,21 @@ const { title } = Astro.props;
       <slot />
     </main>
     <Footer />
-  </body>
+  </body><style is:global>
+    html {
+      font-family: system-ui, sans-serif;
+      background-color: #242f3f;
+    }
+    code {
+      font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    }
+  </style>
 </html>
-<style is:global>
-  html {
-    font-family: system-ui, sans-serif;
-    background-color: #242f3f;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-</style>
