@@ -8,7 +8,7 @@ As the Swedish news aggregator [omni](https://omni.se) started adding more and m
 It turns out this is quite difficult, so results often vary from lackluster to awful. I do not recommend using [åt.se](https://åt.se) as a primary news source.
 
 ## The code
-The code behind [omni](https://omni.se) consists of a buffed up scraper using the OpenAI API, as well as a Astro frontend. Everything is hosted at [kthcloud](https://cloud.cbh.kth.se). 
+The code behind åt consists of a buffed up scraper using the OpenAI API, as well as a Astro frontend. Everything is hosted at [kthcloud](https://cloud.cbh.kth.se). 
 News articles are scraped, summarized, grouped and then stored in a MongoDB database. This is then pulled from the database and built into HTML on the server side in the frontend.
 
 ## License
