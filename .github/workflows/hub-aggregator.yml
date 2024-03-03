@@ -1,4 +1,4 @@
-name: docker hub frontend
+name: docker hub aggregator
 on:
   push:
     branches:
@@ -19,9 +19,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
+          context: ./aggregator
+          file: ./aggregator/Dockerfile
           push: true
-          tags: pierrelf/at_se:frontend
+          tags: pierrelf/at_se:aggregator
           platforms: linux/amd64,linux/arm64
-  
