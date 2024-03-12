@@ -1,4 +1,4 @@
-name: docker-build-aggregator
+name: kthcloud ci aggregator
 on:
   push:
     branches:
