@@ -25,6 +25,10 @@ let stories = await getStoriesByTopic(filtered[0], parseInt(from), pageLength);
 
 import { registerEvent } from "../../db/db";
 registerEvent("pageview", "topics/" + topic);
+
+if (stories.length === 0) {
+  return Astro.redirect("/");
+}
 ---
 
 <Layout title={"åt.se | " + topic}>
