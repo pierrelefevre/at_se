@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - "main"
+    paths:
+      - "aggregator/**"
+      - ".github/workflows/hub-aggregator.yml"
   workflow_dispatch:
 jobs:
   docker:
@@ -19,7 +22,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_SECRET }}
-
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
