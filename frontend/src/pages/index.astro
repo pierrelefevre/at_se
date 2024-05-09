@@ -17,12 +17,15 @@ registerEvent("pageview", "index");
 ---
 
 <Layout title="åt.se">
-  <p class="text-3xl font-black text-white">NYHETSLÄGET</p>
-  <p class="text-white whitespace-pre-wrap my-8">
-    {digest?.digest}
-  </p>
-  <hr class="h-px my-8 border-0 bg-gray-500" />
-
+  {
+    digest && (
+      <>
+        <p class="text-3xl font-black text-white">NYHETSLÄGET</p>
+        <p class="text-white whitespace-pre-wrap my-8">{digest.digest}</p>
+        <hr class="h-px my-8 border-0 bg-gray-500" />
+      </>
+    )
+  }
   {
     groups.map((group, index) => (
       <div class="mb-5">
