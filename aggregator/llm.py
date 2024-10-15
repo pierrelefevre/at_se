@@ -127,6 +127,7 @@ def _group_headlines(headlines):
         ],
     )
     message = completion.choices[0].message.content
+    message = message.replace("```", "").replace("json", "").strip()
 
     groups = json.loads(message)
     return groups
